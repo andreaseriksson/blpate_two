@@ -425,6 +425,13 @@ defmodule BplateTwo.Accounts do
     %Account{}
     |> Account.registration_changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, account} ->
+        Triplex.create(account.token) # Create a new schema
+        {:ok, account}
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 
   @doc """
