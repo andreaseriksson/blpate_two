@@ -23,6 +23,16 @@ defmodule BplateTwoWeb.Router do
     plug BplateTwoWeb.AuthAccessPipeline
   end
 
+  pipeline :graphql do
+    plug BplateTwoWeb.Context
+  end
+
+  scope "/api" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, schema: BplateTwoWeb.Schema
+  end
+
   scope "/", BplateTwoWeb do
     pipe_through :browser
 
@@ -86,5 +96,9 @@ defmodule BplateTwoWeb.Router do
 
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
+  if Mix.env == :dev do
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: BplateTwoWeb.Schema
   end
 end

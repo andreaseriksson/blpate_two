@@ -53,6 +53,9 @@ defmodule BplateTwo.MixProject do
 
       {:guardian, "~> 2.0"},
 
+      {:absinthe, "~> 1.5.0"},
+      {:absinthe_plug, "~> 1.5.0"},
+
       {:phoenix, "~> 1.5.4"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
