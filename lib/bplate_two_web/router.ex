@@ -19,6 +19,10 @@ defmodule BplateTwoWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_authenticated do
+    plug BplateTwoWeb.AuthAccessPipeline
+  end
+
   scope "/", BplateTwoWeb do
     pipe_through :browser
 
