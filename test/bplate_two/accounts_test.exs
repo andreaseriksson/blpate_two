@@ -91,6 +91,12 @@ defmodule BplateTwo.AccountsTest do
       assert is_nil(user.confirmed_at)
       assert is_nil(user.password)
     end
+
+    test "creates an account when registering a user" do
+      email = unique_user_email()
+      {:ok, user} = Accounts.register_user(%{email: email, password: valid_user_password()})
+      assert %Accounts.Account{} = user.account
+    end
   end
 
   describe "change_user_registration/2" do

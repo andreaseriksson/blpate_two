@@ -11,6 +11,8 @@ defmodule BplateTwo.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :avatar, BplateTwo.AvatarUploader.Type
 
+    belongs_to :account, BplateTwo.Accounts.Account
+
     timestamps()
   end
 
@@ -27,6 +29,7 @@ defmodule BplateTwo.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_email()
     |> validate_password()
+    |> create_account_for_new_user(user)
   end
 
   defp validate_email(changeset) do
@@ -121,4 +124,13 @@ defmodule BplateTwo.Accounts.User do
     |> cast(attrs, [])
     |> cast_attachments(attrs, [:avatar])
   end
+
+  defp create_account_for_new_user(%{valid?: true} = changeset, %{account_id: nil} = _user) do
+    with {:ok, account} <- BplateTwo.Accounts.create_account() do
+      put_assoc(changeset, :account, account)
+    else
+      _ -> changeset
+    end
+  end
+  defp create_account_for_new_user(changeset, _), do: changeset
 end

@@ -94,6 +94,21 @@ defmodule BplateTwoWeb.UserAuth do
     assign(conn, :current_user, user)
   end
 
+  @doc """
+  If there is a current_user, assign the current users account
+  as current_account
+  """
+  def fetch_current_account(conn, _opts) do
+    if conn.assigns[:current_user] do
+      user = conn.assigns[:current_user]
+      account = Accounts.get_account!(user.account_id)
+
+      assign(conn, :current_account, account)
+    else
+      conn
+    end
+  end
+
   defp ensure_user_token(conn) do
     if user_token = get_session(conn, :user_token) do
       {user_token, conn}

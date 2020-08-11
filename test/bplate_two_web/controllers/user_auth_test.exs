@@ -114,6 +114,18 @@ defmodule BplateTwoWeb.UserAuthTest do
     end
   end
 
+  describe "fetch_current_account/2" do
+    test "assigns account from user in session", %{conn: conn, user: user} do
+      user_token = Accounts.generate_user_session_token(user)
+      conn =
+        conn
+        |> put_session(:user_token, user_token)
+        |> UserAuth.fetch_current_user([])
+        |> UserAuth.fetch_current_account([])
+      assert conn.assigns.current_account.id == user.account_id
+    end
+  end
+
   describe "redirect_if_user_is_authenticated/2" do
     test "redirects if user is authenticated", %{conn: conn, user: user} do
       conn = conn |> assign(:current_user, user) |> UserAuth.redirect_if_user_is_authenticated([])
