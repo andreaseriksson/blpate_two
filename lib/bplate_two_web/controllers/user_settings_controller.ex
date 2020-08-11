@@ -66,7 +66,7 @@ defmodule BplateTwoWeb.UserSettingsController do
     user = conn.assigns.current_user
 
     case Accounts.update_user_avatar(user, user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "Avatar updated successfully.")
         |> redirect(to: Routes.user_settings_path(conn, :edit))

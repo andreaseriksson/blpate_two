@@ -1,5 +1,6 @@
 defmodule BplateTwoWeb.Router do
   use BplateTwoWeb, :router
+  use Kaffy.Routes #, scope: "/admin", pipe_through: [:some_plug, :authenticate]
 
   import BplateTwoWeb.UserAuth
 

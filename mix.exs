@@ -42,10 +42,15 @@ defmodule BplateTwo.MixProject do
       {:ex_aws_s3, "~> 2.0"},
       {:hackney, "~> 1.9"},
       {:sweet_xml, "~> 0.6"},
+
       {:bcrypt_elixir, "~> 2.0"},
       {:phx_gen_auth, "~> 0.3.0", only: [:dev], runtime: false},
+
       {:sobelow, "~> 0.8", only: :dev},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+
+      {:kaffy, "~> 0.9.0"},
+
       {:phoenix, "~> 1.5.4"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
